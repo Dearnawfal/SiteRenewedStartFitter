@@ -1,0 +1,806 @@
+/* 全局样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 底部通知栏 */
+.top-banner {
+    background-color: #000000;
+    text-align: center;
+    padding: 10px 0;
+    font-weight: 600;
+    color: white;
+}
+
+/* 底部说明部分样式 */
+.footer-info {
+    position: relative;
+    z-index: 3; /* 设置比开始训练按钮更高的z-index */
+}
+
+/* 导航栏 */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #000000;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+    z-index: 10;
+    position: relative;
+}
+
+/* sideline按钮样式 */
+.sideline-btn {
+    background-color: #FFD700;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 20px;
+}
+
+.sideline-btn:hover {
+    background-color: #FFA500;
+    transform: translateY(-2px);
+}
+
+/* 训练模式下底部说明部分默认隐藏 */
+.hero-section.training .footer-info {
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+/* 训练模式下显示的底部说明部分 */
+.hero-section.training .footer-info.visible {
+    transform: translateY(0);
+}
+
+/* 底部计数器样式 */
+#bottom-counter {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #FFD700;
+    bottom: 15%; /* 增加bottom值，使计数器向下移动一些 */
+}
+
+.logo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 15px;
+    margin-right: 10px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a {
+    position: relative;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #FFD700;
+}
+
+/* Contact悬停渐变效果 */
+.hover-text {
+    position: relative;
+    display: inline-block;
+}
+
+.hover-text::after {
+    content: attr(data-hover);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    max-width: 120px;
+    overflow: hidden;
+    color: #FFD700;
+    white-space: nowrap;
+    transition: width 0.3s ease;
+}
+
+.hover-text:hover::after {
+    width: 100%;
+}
+
+.hover-text span {
+    position: relative;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+
+.hover-text:hover span {
+    opacity: 0;
+}
+
+/* 英雄区域 */
+.hero-section {
+    min-height: 600px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+/* YouTube视频背景 */
+.youtube-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.youtube-background iframe {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.1); /* 略微放大以避免出现黑边 */
+}
+
+/* 训练模式下的英雄区域 */
+.hero-section.training {
+    background: none;
+    background-color: #000000;
+}
+
+/* 训练模式下隐藏YouTube视频 */
+.hero-section.training .youtube-background {
+    display: none;
+}
+
+/* 训练模式下隐藏文本内容 */
+.hero-section.training .hero-content {
+    display: none;
+}
+
+/* 呼吸灯效果 */
+@keyframes breathing {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(255, 215, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+    }
+}
+
+.start-training-btn {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: #FFD700;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: breathing 2s infinite;
+}
+
+/* .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    pointer-events: none;
+} */
+
+/* 训练模式下的遮罩 */
+.hero-section.training::before {
+    display: none;
+}
+
+.hero-content {
+    position: absolute;
+    top: 40%; /* 上2/5的位置 */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 800px;
+    padding: 0 20px;
+    text-align: center;
+    z-index: 2;
+}
+
+.start-training-container {
+    position: absolute;
+    top: 72%; /* 向下调整，防止在110%缩放时被视频遮挡 */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.start-training-btn {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: #FFD700;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.start-training-btn:hover {
+    background-color: #FFA500;
+    transform: translateY(-2px);
+}
+
+/* 停止训练按钮样式 */
+.stop-training-btn {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.stop-training-btn:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}
+
+/* 容器样式 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: none;
+}
+
+/* 底部说明部分 */
+.footer-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px 0;
+    color: white;
+    text-align: center;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+/* 训练模式下，底部说明部分下移 */
+.hero-section.training .footer-info {
+    transform: translateY(100%);
+}
+
+/* 退出按钮样式 */
+.close-footer-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.close-footer-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-left {
+    flex: 1;
+    text-align: center;
+    padding-right: 20px;
+    max-width: 600px; /* 限制宽度，使文本居中效果更佳 */
+}
+
+.footer-left h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.footer-left p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.footer-right {
+    display: none; /* 隐藏右侧内容，使左侧文本更加居中 */
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #FFD700;
+}
+
+.subscribe-form {
+    display: flex;
+    gap: 10px;
+}
+
+.subscribe-form input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+.subscribe-form button {
+    padding: 10px 20px;
+    background-color: #FFD700;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.subscribe-form button:hover {
+    background-color: #FFA500;
+}
+}
+
+/* 选择健身动作（顶部） */
+.exercise-selector-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.exercise-selector-top label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: white;
+}
+
+.exercise-selector-top select {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #222;
+    color: white;
+    cursor: pointer;
+}
+
+/* 顶部音量键样式 */
+.mute-icon-top {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 2rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 主内容区域 */
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* 视频区域 */
+.video-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 全屏视频容器（训练模式） */
+.fullscreen-video-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 70%;
+    z-index: 1;
+    display: none;
+    border: 2px solid #FFD700;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.fullscreen-video-container.active {
+    display: block;
+}
+
+.fullscreen-video-container #webcam, 
+.fullscreen-video-container #overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-container {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    background-color: #000;
+}
+
+#webcam, #overlay {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    display: block;
+}
+
+/* 全屏模式下的视频元素样式 */
+.fullscreen-video-container #webcam, 
+.fullscreen-video-container #overlay {
+    max-width: none;
+    height: 100%;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+/* 控制面板区域 */
+.controls-section {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.exercise-selector {
+    margin-bottom: 25px;
+}
+
+.exercise-selector label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.exercise-selector select {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.exercise-selector select:hover {
+    border-color: #FFD700;
+}
+
+.status-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.counter {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #FFD700;
+}
+
+.feedback {
+    font-size: 1.2rem;
+    color: #28a745;
+    font-weight: 500;
+}
+
+/* 按钮样式 */
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+/* 静音图标按钮样式 */
+.mute-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #FFD700;
+    font-size: 2rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+}
+
+/* 次数统计样式 */
+.rep-count-display {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 15px 25px;
+    border-radius: 5px;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    z-index: 3;
+    display: none;
+}
+
+.rep-count-display.active {
+    display: block;
+}
+
+.mute-icon:hover {
+    color: #FFA500;
+    transform: scale(1.1);
+}
+
+/* 静音状态样式 */
+.mute-icon.muted {
+    color: #6c757d;
+}
+
+/* 开始/停止训练按钮样式（通过JavaScript动态添加） */
+.training-controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#start-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+#start-btn:hover:not(:disabled) {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+#stop-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+#stop-btn:hover:not(:disabled) {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}
+
+#mute-btn {
+    background-color: #FFD700;
+    color: #212529;
+}
+
+#mute-btn:hover:not(:disabled) {
+    background-color: #FFA500;
+    transform: translateY(-2px);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 页脚样式 */
+footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 30px;
+    color: #6c757d;
+    font-size: 1rem;
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        padding: 20px;
+    }
+    
+    .nav-links {
+        margin-top: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .hero-section {
+        height: 400px;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .status-display {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    
+    .buttons {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}
+
+/* 模态框样式 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+/* 平板支撑计时器样式 */
+.plank-timer-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999; /* 设置极高的z-index确保在最上层 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0); /* 完全透明背景 */
+    pointer-events: none; /* 允许点击穿透 */
+}
+
+#plank-timer-display {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #FFD700;
+    font-size: 2.5rem;
+    font-weight: bold;
+    padding: 20px 40px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: white;
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.modal-content h2 {
+    color: #FFD700;
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+.modal-content p {
+    color: #6c757d;
+    margin-bottom: 20px;
+}

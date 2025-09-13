@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartFitter - 健身助手</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <!-- 引入MediaPipe Pose和TensorFlow.js库 -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/pose.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@3.19.0/dist/tf-core.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter@3.19.0/dist/tf-converter.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl@3.19.0/dist/tf-backend-webgl.min.js"></script>
+</head>
+<body>
+    <!-- 顶部通知栏 -->
+    <div class="top-banner">
+        <p></p>
+    </div>
+    
+    <!-- 导航栏 -->
+    <nav>
+        <div class="logo">StartFitter</div>
+        <div class="exercise-selector-top">
+            <label for="exercise-type">选择健身动作：</label>
+            <select id="exercise-type">
+                <option value="squat_front">深蹲(正面视角)</option>
+                <option value="squat_side">深蹲(侧面视角)</option>
+                <option value="deadlift">硬拉</option>
+                <option value="pushup">俯卧撑</option>
+                <option value="plank">平板支撑</option>
+            </select>
+        </div>
+        <div class="top-controls">
+            <button id="mute-icon" class="mute-icon-top">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+            </button>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="hover-text" data-hover="Hackathon 20"><span>Please feel free to contact us!</span></a></li>
+            <li><button id="sideline-btn" class="sideline-btn">More</button></li>
+        </ul>
+    </nav>
+    
+    <!-- 英雄区域 -->
+    <section class="hero-section">
+        <!-- YouTube视频背景 -->
+        <div class="youtube-background">
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/KNiEkPwH9S8?autoplay=1&mute=1&loop=1&playlist=KNiEkPwH9S8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="hero-content">
+            <h1>AI明察秋毫，助你百炼成钢</h1>
+            <p>AI智能动作识别，实时纠正你的健身姿势，让每一次训练都安全有效。</p>
+        </div>
+        <div class="start-training-container">
+            <button id="hero-start-btn" class="start-training-btn">开始训练</button>
+        </div>
+    </section>
+    
+    <!-- AI健身助手功能区域 -->
+    <div class="container">
+        <main>
+            <section class="video-section">
+                <div class="video-container">
+                    <video id="webcam" autoplay muted playsinline></video>
+                    <canvas id="overlay"></canvas>
+                </div>
+            </section>
+            
+            <section class="controls-section">
+                <div class="status-display">
+                    <div class="feedback">
+                        <span id="feedback-text">准备开始...</span>
+                    </div>
+                </div>
+                
+                <div class="buttons">
+                    <!-- 这些按钮将通过JavaScript控制显示/隐藏 -->
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>&copy; 2024 StartFitter - 科学健身，预防损伤</p>
+        </footer>
+    </div>
+    
+    <!-- 底部说明部分 -->
+    <div class="footer-info">
+        <div class="footer-content">
+            <div class="footer-left">
+                    <h3>StartFitter</h3>
+                    <p>Personal fitness training service</p>
+                    <p>Unlock your potential and redefine your limits with us. Our trainers tailor workouts to your ability, ensuring you're fit today and undeniably stronger tomorrow. It's our commitment to your health. We deliver effective, efficient workouts paired with nutritional guidance to help you reach your fitness peak.</p>
+                </div>
+                <button id="close-footer-btn" class="close-footer-btn">&times;</button>
+            <div class="footer-right">
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="subscribe-form">
+                    <input type="email" placeholder="Enter your email" value="dearlyloving@163.com">
+                    <button type="submit">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Font Awesome 图标库 -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+    <script>
+    // 弹窗相关元素
+    let countModal;
+    let closeModalBtn;
+    let plankTimerModal;
+    let closeTimerModalBtn;
+    let timerModalTitleElement;
+    </script>
+    <!-- 20次计数提示弹窗 -->
+    <div id="count-modal" class="modal">
+        <div class="modal-content">
+            <h2>已到达20个</h2>
+            <p>建议休息一下再继续训练</p>
+            <button id="close-modal-btn" class="btn">继续训练</button>
+        </div>
+    </div>
+    
+    <!-- 平板支撑计时提醒弹窗 -->
+    <div id="plank-timer-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="timer-modal-title">已坚持30秒！</h2>
+            <p>做得很好，继续保持！</p>
+            <button id="close-timer-modal-btn" class="btn">继续训练</button>
+        </div>
+    </div>
+</body>
+</html>
